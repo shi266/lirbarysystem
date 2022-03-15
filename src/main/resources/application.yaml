@@ -1,0 +1,22 @@
+#Mysql数据库连接配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springbootdata?serverTimezone=UTC
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+    #添加配置第三方数据源Druid
+    druid:
+      initial-size: 20
+      min-idle: 10
+      max-active: 100
+
+
+
+#mybatis配置
+mybatis:
+  mapper-locations: classpath:com.shiqi.lirbarysystem.mapper/*.xml
+  type-aliases-package: classpath:com.shiqi.lirbarysystem.entity
+  configuration:
+    map-underscore-to-camel-case: true   #驼峰命名匹配映射

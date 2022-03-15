@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/webjars/jquery/3.3.1-2/jquery.min.js"></script>
+<style type="text/css">
+    /* 顶部导航栏*/
+    #top{
+        width: 110%;
+        height: 100px;
+        background-color: brown;
+        text-align: center;
+        line-height: 100px;
+        margin-top: -10px;
+        margin-left: -10px;
+
+    }
+    /* 顶部导航栏*/
+    #dao{
+        width: 200px;
+        height: 100px;
+        position: absolute;
+        margin-left: 30px;
+        margin-top: 10px;
+
+    }
+    /*  表单背景*/
+    #selectalldata{
+        background-color: white;
+    }
+    #selectonedata{
+        background-color: white;
+    }
+    /*表单    单元格*/
+        .dan{
+            width: 200px;
+            height: 30px;
+            background-color: darkgrey;
+            text-align: center;
+        }
+        /*  分类div */
+        #one{
+            margin-top: 5%;
+            margin-left: 30%;
+            position: absolute;
+        }
+        /*分类表单  单元格*/
+        .fdan{
+            width: 200px;
+            height: 200px;
+            background-color: cadetblue;
+            text-align: center;
+            transition: 0.5s;
+        }
+    /*分类表单  单元格*/
+        .fdan:hover {
+        transform: scale(1.3);
+        }
+    /*  左侧表单背景*/
+        #tabce{
+        background-color: brown;
+        }
+        /*  左侧菜单*/
+        #ce{
+            position: absolute;
+            margin-top: 0px;
+            margin-left: -10px;
+        }
+    /*  左侧菜单    单元格*/
+        .tce{
+            width: 150px;
+            height: 100px;
+
+            background-color: coral;
+            text-align: center;
+            margin-top: 100px;
+            margin-left: 0px;
+        }
+
+        .alldiv{
+            position: absolute;
+            margin-left: 200px;
+            top: 150px;
+            width: 100%;
+            height: 100%;
+        }
+    #jieshu{
+        position: absolute;
+        margin-left: 40%;
+        top: 30%;
+        width: 250px;
+        height: 200px;
+        background-color: dimgrey;
+        border-radius: 10px;
+        text-align: center;
+    }
+    #huanshu{
+        position: absolute;
+        margin-left: 40%;
+        top: 30%;
+        width: 250px;
+        height: 200px;
+        background-color: dimgrey;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+
+
+</style>
+
+    <!--分类表单-->
+    <script>
+            function a(id) {
+                // window.location.href="/shiqi/fen?id="+id+"";
+                // alert("分类")
+                $(".alldiv").hide();
+                // alert("已隐藏")4
+
+                var context = "" +
+                    "<div class='alldiv' id='fselect'>" +
+                    "<table id='ftable'>" +
+                    "<tr>" +
+                    "<td class='dan'>编号</td>" +
+                    "<td class='dan'>书名</td>" +
+                    "<td class='dan'>作者</td>" +
+                    "<td class='dan'>图片</td>" +
+                    "<td class='dan'>类别</td>" +
+                    "<td class='dan'>日期</td>" +
+                    "<td class='dan'>状态</td>" +
+                    "</tr>" +
+                    "</table>" +
+                    "</div>";
+                $("#bo").append(context);
+                /*显示当前div*/
+                document.getElementById("fselect").style.display = "block";
+                // alert("已显示")
+                $.ajax({
+                    async: false,
+                    type: "get",
+                    data: {id: id},
+                    url: "/shiqi/selectFid",
+                    dataType: "json",
+                    success: function (data) {
+                        // alert("获取的数据："+data)
+                        for (var i = 0; i < data.length; i++) {
+                            var context = "<tr>" +
+                                "<td class='dan'>" + data[i].id + "</td>" +
+                                "<td class='dan'>" + data[i].bname + "</td>" +
+                                "<td class='dan'>" + data[i].author + "</td>" +
+                                "<td class='dan'>" + data[i].img + "</td>" +
+                                "<td class='dan'>" + data[i].fname + "</td>" +
+                                "<td class='dan'>" + data[i].date + "</td>" +
+                                "<td class='dan'>" + data[i].status + "</td>" +
+                                "</tr>";
+
+                            $("#ftable").append(context);
+                        }
+                    }
+
+                })
+            }
+            // } function b(id){
+            //     window.location.href="/shiqi/fen?id="+id+"";
+            // } function c(id){
+            //     window.location.href="/shiqi/fen?id="+id+"";
+            // } function d(id){
+            //     window.location.href="/shiqi/fen?id="+id+"";
+            // } function e(id){
+            //     window.location.href="/shiqi/fen?id="+id+"";
+            // }function f(id){
+            //     window.location.href="/shiqi/fen?id="+id+"";
+            // } function g(id){
+            //     window.location.href="/shiqi/fen?id="+id+"";
+            // } function h(id){
+            //     window.location.href="/shiqi/fen?id="+id+"";
+            // } function i(id){
+            //     window.location.href="/shiqi/fen?id="+id+"";
+            // }function j(id){
+            //     window.location.href="/shiqi/fen?id="+id+"";
+            // }
+            // function k(id){
+            //     window.location.href="/shiqi/fen?id="+id+"";
+            // }
+            // function l(id){
+            //     window.location.href="/shiqi/fen?id="+id+"";
+            // }
+            function updatee(id){
+                window.location.href="/shiqi/toupdate?id="+id+"";
+            }
+
+
+
+    </script>
+    <script>
+        function deletee(id){
+            alert(id)
+            $.ajax({
+                async:false,
+                type:"get",
+                data:{id:id},
+                url:"/shiqi/delete",
+                dataType:"text",
+                success:function (data){
+                   if(data==="success"){
+                       alert("删除成功")
+                       window.location.reload();
+                   }else {
+                       alert("删除失败")
+                   }
+
+                }
+
+            })
+        }
+    </script>
+    <!--左侧  搜索-->
+<script>
+    /*div*/
+    function select(){
+        /*隐藏div*/
+        $(".alldiv").hide();
+
+        /*显示当前div*/
+        document.getElementById("selectall").style.display="block";
+
+
+
+            $.ajax({
+                async:false,
+                type:"get",
+                url:"/shiqi/selectall",
+                dataType:"json",
+                success:function (data){
+                    // alert("获取的数据："+data)
+                    for (var i = 0;i<data.length;i++) {
+                        var context="<tr>" +
+                            "<td class='dan' >"+data[i].id+"</td>" +
+                            "<td class='dan' >"+data[i].bname+"</td>" +
+                            "<td class='dan' >"+data[i].author+"</td>" +
+                            "<td class='dan' >"+data[i].img+"</td>" +
+                            "<td class='dan' >"+data[i].fname+"</td>" +
+                            "<td class='dan' >"+data[i].date+"</td>" +
+                            "<td class='dan' >"+data[i].status+"</td>" +
+                            "<td class='dan' ><a onclick='deletee("+data[i].id+")'>删除</a> <a onclick='allupdatee("+data[i].id+")'> 修改</a></td>" +
+                            "</tr>";
+
+                        $("#selectalldata").append(context);
+                    }
+                }
+
+            })
+
+
+    }
+    /*分类div*/
+    function fenlei(){
+        /*隐藏div*/
+        // alert("分类")
+        $(".alldiv").hide();
+        // alert("已隐藏")4
+        /*显示当前div*/
+        document.getElementById("one").style.display="block";
+        // alert("已显示")
+
+    }
+    /*借书div*/
+      function jieshu(){
+        /*隐藏div*/
+        $(".alldiv").hide();
+        // alert("已隐藏")4
+        /*显示当前div*/
+        document.getElementById("jieshu").style.display="block";
+        // alert("已显示")
+
+    }
+    /*还书div*/
+      function huanshu(){
+        /*隐藏div*/
+        $(".alldiv").hide();
+        // alert("已隐藏")4
+        /*显示当前div*/
+        document.getElementById("huanshu").style.display="block";
+        // alert("已显示")
+
+    }
+    /*报损div*/
+    function baosun(){
+        /*隐藏div*/
+        $(".alldiv").hide();
+        // alert("已隐藏")4
+        /*显示当前div*/
+        document.getElementById("baosun").style.display="block";
+        // alert("已显示")
+
+    }
+    /*记录div*/
+
+    function jilu(){
+        /*隐藏div*/
+        $(".alldiv").hide();
+        // alert("已隐藏")4
+        /*显示当前div*/
+        document.getElementById("jilu").style.display="block";
+        // alert("已显示")
+        <!--借阅记录全查询-->
+        // alert("借阅记录全查询")
+        $.ajax({
+            async:false,
+            type:"get",
+            url:"/shiqi/selectjilu",
+            dataType:"json",
+            success:function (data){
+                // alert("返回信息："+data)
+                for (var i = 0;i<data.length;i++) {
+                    var context="<tr>" +
+                        "<td class='dan' >"+data[i].id+"</td>" +
+                        "<td class='dan' >"+data[i].jlbname+"</td>" +
+                        "<td class='dan' >"+data[i].jlsname+"</td>" +
+                        "<td class='dan' >"+data[i].jlid+"</td>" +
+                        "<td class='dan' >"+data[i].time+"</td>" +
+                        "<td class='dan' >"+data[i].status+"</td>" +
+                        "</tr>";
+
+                    $("#ji").append(context);
+                }
+            }
+        })
+
+
+    }
+    /*信息div*/
+    function xinxi(){
+        /*隐藏div*/
+        $(".alldiv").hide();
+        // alert("已隐藏")4
+        /*显示当前div*/
+        document.getElementById("xinxi").style.display="block";
+        // alert("已显示")
+
+        $.ajax({
+
+            async:false,
+            type:"get",
+            url:"/shiqi/selectxinxi",
+            dataType:"json",
+            success:function (data){
+                // alert("返回信息："+data)
+                for (var i = 0;i<data.length;i++) {
+                    var context="<tr>" +
+                        "<td class='dan' >"+data[i].id+"</td>" +
+                        "<td class='dan' >"+data[i].studentname+"</td>" +
+                        "<td class='dan' >"+data[i].studentclass+"</td>" +
+                        "<td class='dan' >"+data[i].phone+"</td>" +
+                        "<td class='dan' >"+data[i].demitory+"</td>" +
+                        "<td class='dan' >"+data[i].tname+"</td>" +
+                        "<td class='dan' ><a onclick='sdeletee("+data[i].id+")'>删除</a> <a onclick='supdatee("+data[i].id+")'> 修改</a></td>" +
+                        "</tr>";
+
+                    $("#xin").append(context);
+                }
+            }
+        })
+
+
+    }
+
+
+    function selectbyname(){
+
+        $(".alldiv").hide();
+        // alert("按书名搜索")
+        document.getElementById("selectone").style.display="block";
+
+
+        var str = $("#selectbname").val();
+        // alert("1:"+str)
+            $.ajax({
+                async:false,
+                type:"get",
+                data: {"bname":$("#selectbname").val()},
+                url:"/shiqi/selectbyname",
+                dataType:"json",
+                success:function (data){
+                     // alert("书名获取的数据："+data)
+                    for (var i = 0;i<data.length;i++) {
+                        var context="<tr>" +
+                            "<td class='dan' >"+data[i].id+"</td>" +
+                            "<td class='dan' >"+data[i].bname+"</td>" +
+                            "<td class='dan' >"+data[i].author+"</td>" +
+                            "<td class='dan' >"+data[i].img+"</td>" +
+                            "<td class='dan' >"+data[i].fname+"</td>" +
+                            "<td class='dan' >"+data[i].date+"</td>" +
+                            "<td class='dan' >"+data[i].status+"</td>" +
+                            "<td class='dan' ><a onclick='deletee("+data[i].id+")'>删除</a> <a onclick='updatee("+data[i].id+")'> 修改</a></td>" +
+                            "</tr>";
+
+                        $("#selectonedata").append(context);
+                    }
+                }
+
+            })
+
+    }
+</script>
+    <!--借书提交-->
+
+    <script>
+        function btjieshu(){
+            // alert("借书")
+            $.ajax({
+                async:false,
+                type:"get",
+                url:"/shiqi/jieshujilu",
+                data: {
+                    "jsbname":$("#jsbname").val(),
+                    "jssname":$("#jssname").val(),
+                    "jssid":$("#jssid").val(),
+                    "jsstatus":$("#jsstatus").val()
+                },
+                dataType:"text",
+                success:function (data){
+                    if(data==="success"){
+                        alert("借书成功")
+                    }else {
+                        alert("借书失败")
+                    }
+                }
+
+            })
+
+        }
+
+    /*还书记录添加*/
+        function bthuanshu(){
+            // alert("还书")
+            $.ajax({
+                async:false,
+                type:"get",
+                url:"/shiqi/huanshujilu",
+                data: {
+                    "hsbname":$("#hsbname").val(),
+                    "hssname":$("#hssname").val(),
+                    "hssid":$("#hssid").val(),
+                    "hsstatus":$("#hsstatus").val()
+                },
+                dataType:"text",
+                success:function (data){
+                  if(data==="success"){
+                      alert("还书成功")
+                  }else {
+                      alert("还书失败")
+                  }
+                }
+            })
+        }
+    </script>
+    <!--修改与删除-->
+    <script >
+        function allupdatee(id) {
+            alert(id)
+            $(".alldiv").hide();
+            document.getElementById("toup").style.display = "block";
+            $.ajax({
+                async: false,
+                type: "get",
+                data: {"id": id},
+                url: "/shiqi/gettoupdate",
+                dataType: "json",
+                success: function (data) {
+
+                    for (var i = 0; i < data.length; i++) {
+                        var context="" +
+                            "<tr><td class='dan' >"+data[i].id+"</td></tr>" +
+                            "<tr><td class='dan' >"+data[i].bname+"</td></tr>" +
+                            "<tr><td class='dan' >"+data[i].author+"</td></tr>" +
+                            "<tr><td class='dan' >"+data[i].img+"</td></tr>" +
+                            "<tr><td class='dan' >"+data[i].fid+"</td></tr>" +
+                            "<tr><td class='dan' >"+data[i].date+"</td></tr>" +
+                            "<tr><td class='dan' >"+data[i].status+"</td></tr>" +
+                            "";
+                        $("#toupdate").append(context);
+                        $("#toupdate").append("get的数据");
+                        // $("#id").val(data[i].id);
+                        // $("#boname").val(data[i].bname);
+                        // $("#author").val(data[i].author);
+                        // $("#img").val(data[i].img);
+                        // $("#fid").val(data[i].fid);
+                        // $("#date").val(data[i].date);
+                        // $("#status").val(data[i].status);
+
+
+                    }
+                }
+
+            })
+        }
+        function toupcontroller(){
+            $.ajax({
+                async:false,
+                type:"get",
+                data:$("#toup").serialize(),
+                url:"/shiqi/update",
+                dataType:"text",
+                success:function (data){
+                    if(data==="success") {
+                        alert("修改成功")
+                    }else {
+                        alert("修改失败");
+                    }
+
+                }
+
+            })
+        }
+
+    </script>
+
+    <script>
+        function selectjlsid(){
+            // window.location.reload();
+
+            $(".alldiv").hide();
+            // alert("已隐藏")
+            /*显示当前div*/
+            document.getElementById("selectonejilu").style.display="block";
+            alert("搜索的学号："+$(".selectbyjlsid").val())
+            $.ajax({
+
+                async:false,
+                type:"get",
+                data: {"jlsid":$(".selectbyjlsid").val()},
+                url:"/shiqi/selectonejilu",
+                dataType:"json",
+                success:function (data){
+                    alert("返回信息："+data)
+                    for (var i = 0;i<data.length;i++) {
+                        var context="<tr>" +
+                            "<td class='dan' >"+data[i].id+"</td>" +
+                            "<td class='dan' >"+data[i].jlbname+"</td>" +
+                            "<td class='dan' >"+data[i].jlsname+"</td>" +
+                            "<td class='dan' >"+data[i].jlid+"</td>" +
+                            "<td class='dan' >"+data[i].time+"</td>" +
+                            "<td class='dan' >"+data[i].status+"</td>" +
+                            "</tr>";
+
+                        $("#jione").append(context);
+                    }
+                }
+            })
+
+        }
+
+    </script>
+
+</head>
+<body id="bo">
+    <div id="top">
+        <div id="dao">
+            <img  src="/img/dao.png" width="240px" height="80px">
+        </div>
+        <a style="font-size: 35px"><b>郑商学院图书系统</b></a>
+    </div>
+<!--左侧导航div-->
+    <div id="ce" >
+        <!--左侧导航表单-->
+        <table id="tabce">
+            <tr>
+                <td class="tce" onclick="fenlei()">分类</td>
+            </tr> <tr>
+                <td class="tce" onclick="select()">查询</td>
+            </tr>
+            <tr>
+                <td class="tce" onclick="jieshu()">借书</td>
+            </tr>
+            <tr>
+                <td class="tce" onclick="huanshu()">还书</td>
+            </tr>
+            <tr>
+                <td class="tce" onclick="baosun()">报损</td>
+            </tr>
+            <tr>
+                <td class="tce" onclick="jilu()">记录</td>
+            </tr> <tr>
+                <td class="tce" onclick="xinxi()">信息</td>
+            </tr>
+        </table>
+    </div>
+<!--查询所有div-->
+    <div class="alldiv" id="selectall" style="display: none">
+        <!--查询所有表单-->
+        <table id="selectalldata">
+            <tr>
+                <td class="dan" colspan="2"><input type="text" name="bname" id="selectbname" placeholder="请输入书名"><button onclick="selectbyname()">搜索</button></td>
+                <td class="dan" colspan="5">查询所有书籍</td>
+                <td class="dan"><a href="/shiqi/toinsert">添加图书</a> </td>
+            </tr>
+            <tr>
+                <td class="dan" height="50px">编号</td>
+                <td class="dan" >书名</td>
+                <td class="dan" >作者</td>
+                <td class="dan" >图片</td>
+                <td class="dan" >类别</td>
+                <td class="dan" >日期</td>
+                <td class="dan" >状态<br><a style="font-size: 1%;color: red" >(“1”为可借阅)</a></td>
+                <td class="dan" >操作</td>
+            </tr>
+        </table>
+    </div>
+    <!--修改数据div-->
+    <div id="toup" class="alldiv"  >
+        <table id="toupdate">
+            <tr>
+                <td class="dan">编s号</td><td><input type="text" id="id" name="id"></td>
+            </tr>
+<!--            <tr>-->
+<!--                <td class="dan">书名</td><td><input type="text" id="boname" name="bname"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td class="dan">作者</td><td><input type="text" id="author" name="author"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td class="dan">图片</td><td><input type="text" id="img" name="img"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td class="dan">类别</td><td><input type="text" id="fid" name="fid"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td class="dan">日期</td><td><input type="date" id="date" name="date"></td>-->
+<!--            </tr>-->
+
+<!--            <tr>-->
+<!--                <td class="dan">状态<br><a style="font-size: 1%;color: red" >(“0”：不可借阅；“1”：可借阅)</a></td>-->
+<!--                <td><input type="text" id="status" name="status" ></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td class="dan" colspan="2"><button onclick="toupcontroller()"><a href="/shiqi/index">修改</a></button></td>-->
+
+<!--            </tr>-->
+        </table>
+
+    </div>
+<!--按书名查询div-->
+    <div class="alldiv" id="selectone" style="display: none">
+         <table id="selectonedata">
+             <tr>
+                 <td class="dan" colspan="2"><input type="text" name="bname" class="selectbname" placeholder="请输入书名"><button onclick="selectbyname()">搜索</button></td>
+                 <td class="dan" colspan="6">根据书名查询</td>
+
+             </tr>
+            <tr>
+                <td class="dan" height="50px">编号</td>
+                <td class="dan" >书名</td>
+                <td class="dan" >作者</td>
+                <td class="dan" >图片</td>
+                <td class="dan" >类别</td>
+                <td class="dan" >日期</td>
+                <td class="dan" >状态<br><a style="font-size: 1%;color: red" >(“1”为可借阅)</a></td>
+                <td class="dan" >操作</td>
+            </tr>
+         </table>
+    </div>
+<!--分类div-->
+    <div id="one" class="alldiv">
+        <!--分类表单-->
+        <table id="tab" >
+            <tr>
+                <td class="fdan" onclick="a(1)">休闲2</td>
+                <td class="fdan"  onclick="a(2)">青春3</td>
+                <td class="fdan" onclick="a(3)">传记2</td>
+                <td class="fdan" onclick="d(4)">艺术</td>
+            </tr>
+            <tr>
+                <td class="fdan" onclick="a(5)">文学</td>
+                <td class="fdan" onclick="a(6)">历史</td>
+                <td class="fdan" onclick="a(7)">军事</td>
+                <td class="fdan" onclick="a(8)">心理</td>
+            </tr>
+            <tr>
+                <td class="fdan" onclick="a(9)">科幻</td>
+                <td class="fdan" onclick="a(10)">经济</td>
+                <td class="fdan" onclick="a(11)">是多少</td>
+                <td class="fdan" onclick="a(12)">收到</td>
+            </tr>
+        </table>
+    </div>
+
+    <!--借书div-->
+    <div id="jieshu" class="alldiv" style="display: none">
+        <table id="jie">
+            <tr>
+                <td>借书登记</td>
+            </tr>
+            <tr>
+                <td>书名：<input type="text" name="jsbname" id="jsbname"></td>
+            </tr>
+            <tr>
+                <td>姓名：<input type="text" name="jssname" id="jssname"></td>
+            </tr>
+
+            <tr>
+                <td>学号：<input type="text" name="jssid" id="jssid">
+                    <input type="text" name="jsstatus" id="jsstatus" value="借" style="display: none">
+                </td>
+
+            </tr>
+
+            <tr>
+                <td><button onclick="btjieshu()">确认</button></td>
+            </tr>
+        </table>
+
+    </div>
+    <!--还书div-->
+    <div id="huanshu" class="alldiv" style="display: none">
+        <table id="huan">
+            <tr>
+                <td>还书登记</td>
+            </tr>
+            <tr>
+                <td>书名：<input type="text" name="hsbname" id="hsbname"></td>
+            </tr>
+            <tr>
+                <td>姓名：<input type="text" name="hssname" id="hssname"></td>
+            </tr>
+
+            <tr>
+                <td>学号：<input type="text" name="hssid" id="hssid">
+                    <input type="text" name="hsstatus" id="hsstatus" value="还" style="display: none">
+                </td>
+
+            </tr>
+
+            <tr>
+                <td><button onclick="bthuanshu()">确认</button></td>
+            </tr>
+        </table>
+
+    </div>
+    <!--报损div-->
+    <div id="baosun" class="alldiv" style="display: none">
+        <table id="bao">
+            <tr>
+                <td>报损登记</td>
+                <td>报损记录</td>
+            </tr>
+            <tr>
+                <td>编号：<input type="text" name="bname" id="bname"></td>
+            </tr>
+            <tr>
+                <td>书名：<input type="text" name="bname" id="bname"></td>
+            </tr>
+            <tr>
+                <td>姓名：<input type="text" name="bname" id="bname"></td>
+            </tr>
+            <tr>
+                <td>班级：<input type="text" name="bname" id="bname"></td>
+            </tr>
+            <tr>
+                <td>学号：<input type="text" name="bname" id="bname"></td>
+            </tr>
+            <tr>
+                <td>电话：<input type="text" name="bname" id="bname"></td>
+            </tr>
+            <tr>
+                <td><button onclick="btbaosun()">确认</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <!--记录div-->
+    <div id="jilu" class="alldiv" style="display: none">
+        <table id="ji">
+            <tr>
+                <td class="dan" colspan="2"><input type="text" name="selectjlsid" class="selectbyjlsid" placeholder="请输入学号"><button onclick="selectjlsid()">搜索</button></td>
+                <td class="dan" colspan="4">学生借阅记录</td>
+
+            </tr>
+            <tr>
+                <td class="dan">编号</td>
+                <td class="dan">书名</td>
+                <td class="dan">姓名</td>
+                <td class="dan">学号</td>
+                <td class="dan">时间</td>
+                <td class="dan">状态</td>
+            </tr>
+        </table>
+    </div>
+    <div class="alldiv" id="selectonejilu" style="display: none">
+        <table id="jione" >
+            <tr>
+                <td class="dan" colspan="2"><input type="text" name="selectjlsid" class="selectbyjlsid" placeholder="请输入学号"><button onclick="selectjlsid()">搜索</button></td>
+                <td class="dan" colspan="4">根据学号查询</td>
+
+            </tr>
+            <tr>
+                <td class="dan">编号</td>
+                <td class="dan">书名</td>
+                <td class="dan">姓名</td>
+                <td class="dan">学号</td>
+                <td class="dan">时间</td>
+                <td class="dan">状态</td>
+            </tr>
+        </table>
+
+    </div>
+    <!--信息div-->
+    <div id="xinxi" class="alldiv" style="display: none">
+        <table id="xin">
+            <tr>
+                <td class="dan" colspan="7">学生信息</td>
+
+            </tr>
+            <tr>
+            <td class="dan">编号</td>
+            <td class="dan">姓名</td>
+            <td class="dan">班级</td>
+            <td class="dan">电话</td>
+            <td class="dan">宿舍</td>
+            <td class="dan">辅导员</td>
+            <td class="dan">操作/<a>添加</a></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

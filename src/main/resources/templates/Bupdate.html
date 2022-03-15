@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/webjars/jquery/3.3.1-2/jquery.min.js"></script>
+</head>
+<style type="text/css">
+    tr td{
+        width: 200px;
+        height: 30px;
+        background-color: pink;
+        text-align: center;
+    }
+</style>
+
+<script>
+    function update(){
+        $.ajax({
+            async:false,
+            type:"get",
+            data:$("#formall").serialize(),
+            url:"/shiqi/update",
+            dataType:"text",
+            success:function (data){
+               if(data==="success") {
+                   alert("修改成功")
+               }else {
+                   alert("修改失败");
+               }
+
+            }
+
+        })
+    }
+
+</script>
+<script th:inline="javascript">
+    $(function () {
+        var str = [[${json}]];
+        var data = eval(str);
+        alert(data)
+        for (var i = 0;i<data.length;i++) {
+
+                           $("#id").val(data[i].id);
+                           $("#bname").val(data[i].bname);
+                          $("#author").val(data[i].author);
+                           $("#img").val(data[i].img);
+                            $("#fid").val(data[i].fid);
+                           $("#date").val(data[i].date);
+                            $("#status").val(data[i].status);
+
+
+                       }
+    })
+</script>
+
+<body>
+<form id="formall">
+<div id="one">
+
+        <table>
+            <tr>
+                <td class="line">编s号</td><td><input type="text" id="id" name="id"></td>
+            </tr>
+            <tr>
+                <td class="line">书名</td><td><input type="text" id="bname" name="bname"></td>
+            </tr>
+            <tr>
+                <td class="line">作者</td><td><input type="text" id="author" name="author"></td>
+            </tr>
+            <tr>
+                <td class="line">图片</td><td><input type="text" id="img" name="img"></td>
+            </tr>
+            <tr>
+                <td class="line">类别</td><td><input type="text" id="fid" name="fid"></td>
+            </tr>
+            <tr>
+                <td class="line">日期</td><td><input type="date" id="date" name="date"></td>
+            </tr>
+
+            <tr>
+                <td class="line">状态<br><a style="font-size: 1%;color: red" >(“0”：不可借阅；“1”：可借阅)</a></td>
+                <td><input type="text" id="status" name="status" ></td>
+            </tr>
+            <tr>
+                <td class="line" colspan="2"><button onclick="update()"><a href="/shiqi/index">修改</a></button></td>
+
+            </tr>
+        </table>
+
+</div>
+</form>
+</body>
+</html>

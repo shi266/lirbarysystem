@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/webjars/jquery/3.3.1-2/jquery.min.js"></script>
+</head>
+<style type="text/css">
+    .line{
+        width: 100px;
+        height: 100px;
+        background-color: pink;
+        text-align: center;
+
+    }
+    table{
+        background-color: aqua;
+    }
+
+</style>
+<script>
+    $(function (data){
+        var str = window.location.href;
+        alert(str)
+        var num =str.indexOf("=");
+        var  id  = str.substr(num+1);
+        // alert(id)
+        $.ajax({
+            async:false,
+            type:"get",
+            data:{id:id},
+            url:"/shiqi/selectFid",
+            dataType:"json",
+            success:function (data){
+                // alert("获取的数据："+data)
+                for (var i = 0;i<data.length;i++) {
+                    var context="<tr>" +
+                        "<td class='line'>"+data[i].id+"</td>" +
+                        "<td class='line'>"+data[i].bname+"</td>" +
+                        "<td class='line'>"+data[i].author+"</td>" +
+                        "<td class='line'>"+data[i].img+"</td>" +
+                        "<td class='line'>"+data[i].fname+"</td>" +
+                        "<td class='line'>"+data[i].date+"</td>" +
+                        "<td class='line'>"+data[i].status+"</td>" +
+                        "</tr>";
+
+                    $("#tab").append(context);
+                }
+            }
+
+        })
+
+
+
+    })
+</script>
+<body>
+<div id="one">
+    <table id="tab">
+        <tr>
+            <td class="line">编号</td>
+            <td class="line">书名</td>
+            <td class="line">作者</td>
+            <td class="line">图片</td>
+            <td class="line">类别</td>
+            <td class="line">日期</td>
+            <td class="line">状态<br><a style="font-size: 1%;color: red" >(“1”为可借阅)</a></td>
+        </tr>
+    </table>
+
+</div>
+
+</body>
+</html>
